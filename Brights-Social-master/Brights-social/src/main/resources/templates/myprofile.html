@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section class="banner">
+    <h1 class="welcome">Welcome to Brights Social</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card profileCard" width="150px">
+                    <img src="../images/profile.png" width="100px" class="card-img-top" alt="...">
+                    <ul class="list-group list-group-flush">
+                        <li th:text="${session.username}" class="list-group-item"></li>
+                        <li th:text="${people.firstName} + ' ' + ${people.lastName}" class="list-group-item"></li>
+                        <li th:text="${people.city}" class="list-group-item"></li>
+                    </ul>
+
+                    <div class="card-body">
+                        <h5 class="card-title biotext">Bio</h5>
+                        <p class="card-text biotext" th:text="${people.presentation} ?: 'You can add a bio in the edit profile tab'"></p>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-6 text-align-center">
+                <form action="/myprofile" method="post" th:object="${message}" class="profileCard" >
+                    <textarea style="border:1px solid" th:field="*{messageBody}" ></textarea>
+                    <input th:if="${message.id != null}" type="hidden" th:field="*{sender}"/>
+                    <input th:if="${message.id != null}" type="hidden" th:field="*{id}"/>
+                    <button type="submit" class="btn btn-primary customBtn">Send</button>
+                </form>
+                <h2>Feed</h2>
+                <div th:each="message : ${messages}" class="card customcard" style="width: 500px;">
+                    <div class="card-header">
+                        <div class="row">
+                            <a th:href="'/profile/' + ${message.sender}" th:text="${message.sender}"></a>
+                            <p class="time" th:text="${message.time}"> </p>
+                            <div class="btn-span">
+                           <button th:if="${message.sender == session.username}" type="delete" class="btn btn-primary pull-right" th:onclick="|window.location.href='/deleteMessage/' + ${message.id}|">Delete</button>
+                           <button th:if="${message.sender == session.username}" type="edit" class="btn btn-primary pull-right" th:onclick="|window.location.href='/editMessage/' + ${message.id}|">Edit</button>
+                        </div>
+                        </div>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:text="${message.messageBody}"></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col">
+                <h2>Other users</h2>
+                <div th:each="us : ${users}" class="card customcard" style="width: 18rem;">
+                    <div class="card-header">
+                        <a th:href="'/profile/' + ${us.username}" th:text="${us.username}"></a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:text="${us.firstName} + ' ' + ${us.lastName}"></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+<script>
+    function update(){
+    }
+</script>
+</section>
+</body>
+</html>

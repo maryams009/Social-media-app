@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section class="banner col-md-8 offset-md-5"  id="register">
+<h1 th:text="${people.firstName} + ' profil'"></h1>
+  <div class="card" style="width: 18rem;">
+    <img src="../images/profile.png" height="200px" width="100px" class="card-img-top" alt="...">
+    <div class="card-body">
+      <br>
+      <h5 class="card-title biotext">Bio</h5>
+      <p class="card-text biotext" th:text="${people.presentation}"></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" th:text="'First name:       '+${people.firstName}" ></li>
+      <li class="list-group-item" th:text="'Last name:       '+${people.lastName}"></li>
+      <li class="list-group-item" th:text="'City :          '+${people.city}"></li>
+    </ul>
+
+  </div>
+
+</section>
+</body>
+</html>
